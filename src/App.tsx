@@ -6,10 +6,18 @@ type ProdutoType = {
   nome:string,
   descricao:string,
   preco:string,
-  imagem:string 
+  imagem:string npm 
+}
+type UsuarioType = {
+  id:number,
+  nome:string,
+  email:string,
+  created_at:string,
+  updated_at:string 
 }
 function App() {
   const [produtos, setProdutos] = useState<ProdutoType[]> ([])
+  const [usuarios, setUsuarios] = useState<UsuarioType[]> ([])
 
 //useEffect(oque fazer e quando fazer)
   useEffect(()=>{
@@ -17,7 +25,13 @@ function App() {
     .then(resposta=>resposta.json())
     .then(dados=>setProdutos(dados))
   },[])
+  useEffect(()=>{
+    fetch("https://one022b-marketplace-6ac4. onrender.com/usuarios")
+    .then(resposta=>resposta.json())
+    .then(dados=>setUsuarios(dados))
+  },[])
 
+  
   return (
     <>
     <div className='container-produtos'>
@@ -36,6 +50,23 @@ function App() {
         })
       }
        </div>
+       <div className='container-usuarios'>
+      {
+        usuarios.map(prod=>{
+          return(
+            <div key={prod.id} className='usuario-item'>
+              <h1>
+                {prod.nome}
+              </h1>
+              <p>{prod.email}</p>
+              <p>{prod.created_at}</p>
+              <p>{prod.updated_at}</p>
+            </div>
+          )
+        })
+      }
+       </div>
+       
     </>
   )
 }
